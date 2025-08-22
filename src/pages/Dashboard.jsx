@@ -12,7 +12,7 @@ import Breadcrumbs from "./Breadcrumbs";
 import ShareModal from "./ShareModal";
 import TrashView from "./TrashView";
 import { AuthContext } from "../context/AuthContext.jsx";
-
+const API_URL = import.meta.env.VITE_API_URL;
 // Import react-icons
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -106,7 +106,7 @@ export default function Dashboard() {
     const handleDownload = async (fileId, fileName) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:5000/api/files/${fileId}/download`, {
+            const response = await fetch(`${API_URL}/files/${fileId}/download`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchFileById } from "../api/files"; // you'll need a backend API
+import { fetchFileById } from "../api/files";
 
 
 export default function SharedFileView() {

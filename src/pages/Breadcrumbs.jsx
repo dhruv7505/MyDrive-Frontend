@@ -16,14 +16,14 @@ export default function Breadcrumbs({ folder, onClick }) {
         const path = [];
         let current = currentFolder;
 
-        // Build path from current folder up to root
-        while (current) {
-            path.unshift(current); // Add to beginning of array
 
-            // If current folder has a parent, fetch it
+        while (current) {
+            path.unshift(current);
+
+
             if (current.parent_id) {
                 try {
-                    // You'll need to implement this API call
+
                     current = await fetchFolderById(current.parent_id);
                 } catch (error) {
                     console.error("Error fetching parent folder:", error);
@@ -37,10 +37,9 @@ export default function Breadcrumbs({ folder, onClick }) {
         setBreadcrumbPath(path);
     };
 
-    // Temporary function - replace with your actual API call
+
     const fetchFolderById = async (id) => {
-        // This should call your backend API to get folder by ID
-        // For now, return null to prevent infinite loops
+
         return null;
     };
 
@@ -52,7 +51,7 @@ export default function Breadcrumbs({ folder, onClick }) {
 
     const handleHomeClick = () => {
         if (onClick) {
-            onClick(null); // null represents root/home folder
+            onClick(null);
         }
     };
 

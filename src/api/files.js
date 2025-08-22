@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Helper to get fresh token each time
 const getAuthHeaders = () => ({
@@ -11,7 +11,7 @@ export const fetchFiles = async (folderId = null) => {
     const res = await axios.get(
         `${API_URL}/files/list${folderId ? "?folderId=" + folderId : ""}`,
         {
-            headers: getAuthHeaders(), // ✅ Get fresh token
+            headers: getAuthHeaders(),
         }
     );
     return Array.isArray(res.data) ? res.data : [];
@@ -31,7 +31,7 @@ export const uploadFile = async (file, folderId = null) => {
     if (folderId) formData.append("folderId", folderId);
     await axios.post(`${API_URL}/files/upload`, formData, {
         headers: {
-            ...getAuthHeaders(), // ✅ Get fresh token
+            ...getAuthHeaders(),
             "Content-Type": "multipart/form-data",
         },
     });
@@ -41,14 +41,14 @@ export const createFolder = async (name, parentId = null) => {
     const res = await axios.post(
         `${API_URL}/folders/create`,
         { name, parentId },
-        { headers: getAuthHeaders() } // ✅ Get fresh token
+        { headers: getAuthHeaders() }
     );
     return res.data;
 };
 
 export const fetchFileById = async (id) => {
     const res = await fetch(`${API_URL}/files/${id}/download`, {
-        headers: getAuthHeaders(), // ✅ Get fresh token
+        headers: getAuthHeaders(),
     });
 
     if (!res.ok) {
@@ -63,7 +63,7 @@ export const deleteFile = async (fileId) => {
     const res = await axios.put(
         `${API_URL}/files/${fileId}`,
         {},
-        { headers: getAuthHeaders() } // ✅ Get fresh token
+        { headers: getAuthHeaders() }
     );
     return res.data;
 };
@@ -72,21 +72,21 @@ export const restoreFile = async (fileId) => {
     const res = await axios.put(
         `${API_URL}/files/${fileId}/restore`,
         {},
-        { headers: getAuthHeaders() } // ✅ Get fresh token
+        { headers: getAuthHeaders() }
     );
     return res.data;
 };
 
 export const permanentDeleteFile = async (fileId) => {
     const res = await axios.delete(`${API_URL}/files/${fileId}/permanent`, {
-        headers: getAuthHeaders(), // ✅ Get fresh token
+        headers: getAuthHeaders(),
     });
     return res.data;
 };
 
 export const fetchTrashedFiles = async () => {
     const res = await axios.get(`${API_URL}/files/list?trashed=true`, {
-        headers: getAuthHeaders(), // ✅ Get fresh token
+        headers: getAuthHeaders(),
     });
     return Array.isArray(res.data) ? res.data : [];
 };

@@ -2,11 +2,11 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
-
+const API_URL = import.meta.env.VITE_API_URL;
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
 
-    // On mount, load token + user from localStorage
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userData = localStorage.getItem("user");
@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
         }
     }, []);
 
-    // Login: save both token and user info
+
     const login = (token, userData) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -27,9 +27,9 @@ export function AuthProvider({ children }) {
         const token = localStorage.getItem("token");
         try {
             if (token) {
-                // optional: call backend to blacklist token
+
                 await axios.post(
-                    "http://localhost:5000/api/auth/logout",
+                    `${API_URL}/auth/logout`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
